@@ -9,8 +9,7 @@ import java.math.BigDecimal;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CarDto {
-    private Long id;
+public class UpdateCarDto {
     private int year;
     private String name;
     private BigDecimal price;
