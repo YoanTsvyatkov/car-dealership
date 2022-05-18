@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.fmi</groupId>
-	<artifactId>car-delership</artifactId>
+	<artifactId>car-dealership</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>car-delership</name>
+	<name>car-dealership</name>
 	<description>Spring boot project</description>
 	<properties>
 		<java.version>11</java.version>
@@ -44,6 +44,11 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>2.0.1.Final</version>
 		</dependency>
 	</dependencies>
 
