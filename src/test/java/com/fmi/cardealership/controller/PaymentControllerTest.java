@@ -1,2 +1,4 @@
-package com.fmi.cardealership.controller;public class PaymentControllerTest {
+package com.fmi.cardealership.controller;
+
+public class PaymentControllerTest {
 }
