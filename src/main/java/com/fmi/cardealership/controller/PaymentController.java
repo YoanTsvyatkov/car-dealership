@@ -4,13 +4,14 @@ import com.fmi.cardealership.dto.PaymentDto;
 import com.fmi.cardealership.model.Payment;
 import com.fmi.cardealership.service.PaymentService;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @RestController
@@ -20,13 +21,12 @@ public class PaymentController {
     private final PaymentService paymentService;
     private final ModelMapper modelMapper;
 
-    private final Logger logger;
+    private static final Logger logger = LoggerFactory.getLogger(PaymentController.class);
 
     @Autowired
-    public PaymentController(PaymentService paymentService, ModelMapper modelMapper, Logger logger) {
+    public PaymentController(PaymentService paymentService, ModelMapper modelMapper) {
         this.paymentService = paymentService;
         this.modelMapper = modelMapper;
-        this.logger = logger;
     }
 
     @GetMapping
