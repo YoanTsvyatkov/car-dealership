@@ -33,4 +33,19 @@ public class PaymentService {
     public void deletePayment(Long id) {
         paymentRepository.deleteById(id);
     }
+
+    public Payment updatePayment(Long paymentId,  Payment payment){
+        Optional<Payment> dbPayment = paymentRepository.findById(paymentId);
+        if(dbPayment.isPresent()) {
+            Payment newPayment = dbPayment.get();
+            newPayment.setAmount(payment.getAmount());
+            newPayment.setCarId(payment.getCarId());
+            newPayment.setDate(payment.getDate());
+            newPayment.setUserId(payment.getUserId());
+
+        }else {
+            paymentRepository.save(payment);
+        }
+        return payment;
+    }
 }
