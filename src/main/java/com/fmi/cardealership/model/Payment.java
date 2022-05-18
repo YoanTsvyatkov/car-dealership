@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import javax.validation.constraints.Positive;
 import java.time.LocalDate;
 
@@ -39,6 +40,7 @@ public class Payment {
 
     @Column
     @NotNull(message = "Payment date must not be null")
+    @Past(message = "Payment date must the current date or a date before the current date")
     private LocalDate date;
 
 

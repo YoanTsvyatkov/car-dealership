@@ -42,6 +42,7 @@ public class PaymentService {
             newPayment.setCarId(payment.getCarId());
             newPayment.setDate(payment.getDate());
             newPayment.setUserId(payment.getUserId());
+            paymentRepository.save(newPayment);
 
         }else {
             paymentRepository.save(payment);
