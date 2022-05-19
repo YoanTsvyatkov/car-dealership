@@ -26,13 +26,13 @@ public class Payment {
     @ManyToOne
     @JoinColumn(name = "user_id")
     @NotNull(message = "UserId in payment must not be null")
-    private User userId;
+    private User user;
 
 
     @OneToOne
     @JoinColumn(name = "car_id")
     @NotNull(message = "CarId in payment must not be null")
-    private Car carId;
+    private Car car;
 
     @Column
     @Positive(message = "Payment amount must be positive")

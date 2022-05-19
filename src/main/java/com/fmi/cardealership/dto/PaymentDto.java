@@ -1,12 +1,9 @@
 package com.fmi.cardealership.dto;
 
-import com.fmi.cardealership.model.Car;
-import com.fmi.cardealership.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Positive;
@@ -22,12 +19,12 @@ public class PaymentDto {
     private Long id;
 
     @NotNull(message = "Payment's user must not be null")
-    @Valid
-    private User user;
+    @Positive(message = "Payment's userId must be positive")
+    private Long userID;
 
     @NotNull(message = "Payment car object must not be null")
-    @Valid
-    private Car car;
+    @Positive(message = "Payment's carId must be positive")
+    private Long carId;
 
     @Positive(message = "Payment amount must not be null")
     private double amount;
