@@ -2,7 +2,6 @@ package com.fmi.cardealership.controller;
 
 import com.fmi.cardealership.dto.CreateUpdateUserDto;
 import com.fmi.cardealership.dto.UserDto;
-import com.fmi.cardealership.exception.EntityNotFoundException;
 import com.fmi.cardealership.model.User;
 import com.fmi.cardealership.service.UserService;
 import javax.validation.Valid;
@@ -33,17 +32,11 @@ public class UserController {
 
     @GetMapping
     public List<UserDto> getAllUsers() {
-        List<UserDto> allUsers = userService
+        return userService
                 .getAllUsers()
                 .stream()
                 .map(user -> modelMapper.map(user, UserDto.class))
                 .collect(Collectors.toList());
-
-        if (allUsers.isEmpty()) {
-            throw new EntityNotFoundException("No users found!");
-        }
-        return allUsers;
-
     }
 
     @GetMapping("/{username}")
