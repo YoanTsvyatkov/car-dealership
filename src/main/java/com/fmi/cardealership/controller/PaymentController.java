@@ -2,7 +2,9 @@ package com.fmi.cardealership.controller;
 
 import com.fmi.cardealership.dto.PaymentDto;
 import com.fmi.cardealership.model.Payment;
+import com.fmi.cardealership.service.CarService;
 import com.fmi.cardealership.service.PaymentService;
+import com.fmi.cardealership.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeMap;
 import org.slf4j.Logger;
@@ -19,18 +21,24 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/payments")
 public class PaymentController {
 
-    private final PaymentService paymentService;
-    private static final ModelMapper modelMapper = new ModelMapper();
-
+    private final ModelMapper modelMapper = new ModelMapper();
     private static final Logger logger = LoggerFactory.getLogger(PaymentController.class);
+    private final PaymentService paymentService;
 
-    static {
-        createTypeMapper();
-    }
+    //Need UserService to map PaymentDto(userId) to User
+    private final UserService userService;
+
+    //Same for CarService
+    private final CarService carService;
+
 
     @Autowired
-    public PaymentController(PaymentService paymentService) {
+    public PaymentController(PaymentService paymentService, CarService carService, UserService userService) {
         this.paymentService = paymentService;
+        this.carService = carService;
+        this.userService = userService;
+        createTypeMapperEntityToDto();
+        createTypeMapperDtoToEntity();
     }
 
     @GetMapping
@@ -67,12 +75,25 @@ public class PaymentController {
         logger.info(String.format("User with id %d was updated", paymentDto.getId()));
     }
 
-    private static void createTypeMapper() {
+    private void createTypeMapperEntityToDto() {
         TypeMap<Payment, PaymentDto> typeMap = modelMapper.createTypeMap(Payment.class, PaymentDto.class);
         typeMap.addMapping(Payment::getAmount, PaymentDto::setAmount);
         typeMap.addMapping(Payment::getId, PaymentDto::setId);
+        typeMap.addMapping(Payment::getDate, PaymentDto::setDate);
+
         typeMap.addMappings(mapper -> mapper.map(src -> src.getCar().getId(), PaymentDto::setCarId));
         typeMap.addMappings(mapper -> mapper.map(src -> src.getUser().getId(), PaymentDto::setUserID));
-        typeMap.addMapping(Payment::getDate, PaymentDto::setDate);
+
+    }
+
+    private void createTypeMapperDtoToEntity() {
+        TypeMap<PaymentDto, Payment> typeMap = modelMapper.createTypeMap(PaymentDto.class, Payment.class);
+        typeMap.addMapping(PaymentDto::getAmount, Payment::setAmount);
+        typeMap.addMapping(PaymentDto::getId, Payment::setId);
+        typeMap.addMapping(PaymentDto::getDate, Payment::setDate);
+
+        typeMap.addMappings(mapper -> mapper.map(src -> carService.getCarById(src.getCarId()), Payment::setCar));
+        typeMap.addMappings(mapper -> mapper.map(src -> userService.getUserById(src.getUserID()), Payment::setUser));
+
     }
 }

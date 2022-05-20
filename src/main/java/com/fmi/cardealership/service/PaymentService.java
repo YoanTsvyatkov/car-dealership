@@ -23,7 +23,7 @@ public class PaymentService {
 
     public Payment getPaymentById(Long id) {
         return paymentRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(String.format("User with id %d not found",id)));
+                .orElseThrow(() -> new EntityNotFoundException(String.format("User with id %d not found", id)));
     }
 
     public Payment storePayment(Payment payment) {
@@ -34,17 +34,17 @@ public class PaymentService {
         paymentRepository.deleteById(id);
     }
 
-    public Payment updatePayment(Long paymentId,  Payment payment){
+    public Payment updatePayment(Long paymentId, Payment payment) {
         Optional<Payment> dbPayment = paymentRepository.findById(paymentId);
-        if(dbPayment.isPresent()) {
+        if (dbPayment.isPresent()) {
             Payment newPayment = dbPayment.get();
             newPayment.setAmount(payment.getAmount());
-            newPayment.setCarId(payment.getCarId());
+            newPayment.setCar(payment.getCar());
             newPayment.setDate(payment.getDate());
-            newPayment.setUserId(payment.getUserId());
+            newPayment.setUser(payment.getUser());
             paymentRepository.save(newPayment);
 
-        }else {
+        } else {
             paymentRepository.save(payment);
         }
         return payment;

@@ -44,6 +44,4 @@ public class Payment {
     private LocalDate date;
 
 
-
-
 }
