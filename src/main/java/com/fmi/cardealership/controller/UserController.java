@@ -1,8 +1,8 @@
 package com.fmi.cardealership.controller;
 
-import com.fmi.cardealership.dto.CreateUserDto;
-import com.fmi.cardealership.dto.UpdateUserDto;
+import com.fmi.cardealership.dto.CreateUpdateUserDto;
 import com.fmi.cardealership.dto.UserDto;
+import com.fmi.cardealership.exception.EntityNotFoundException;
 import com.fmi.cardealership.model.User;
 import com.fmi.cardealership.service.UserService;
 import javax.validation.Valid;
@@ -33,16 +33,29 @@ public class UserController {
 
     @GetMapping
     public List<UserDto> getAllUsers() {
-        return userService
+        List<UserDto> allUsers = userService
                 .getAllUsers()
                 .stream()
                 .map(user -> modelMapper.map(user, UserDto.class))
                 .collect(Collectors.toList());
+
+        if (allUsers.isEmpty()) {
+            throw new EntityNotFoundException("No users found!");
+        }
+        return allUsers;
+
+    }
+
+    @GetMapping("/{username}")
+    public UserDto getUserByUsername(@PathVariable("username") String username) {
+        User user = userService.getUserByUsername(username);
+
+        return modelMapper.map(user, UserDto.class);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public UserDto registerUser(@Valid @RequestBody CreateUserDto createUserDto) {
+    public UserDto registerUser(@Valid @RequestBody CreateUpdateUserDto createUserDto) {
         User user = modelMapper.map(createUserDto, User.class);
         User addedUser = userService.addUser(user);
 
@@ -50,41 +63,20 @@ public class UserController {
         return modelMapper.map(addedUser, UserDto.class);
     }
 
-    @DeleteMapping("/byID/{id}")
-    public UserDto deleteUserById(@PathVariable("id") Long id) {
-        User removedUser = userService.deleteUserById(id);
-
-        logger.info(String.format("The user with id %d was removed!", id));
-        return modelMapper.map(removedUser, UserDto.class);
-    }
-
-    @DeleteMapping("/byUsername/{username}")
-    public UserDto deleteUserById(@PathVariable("username") String username) {
+    @DeleteMapping("/{username}")
+    public UserDto deleteUserByUsername(@PathVariable("username") String username) {
         User removedUser = userService.deleteUserByUsername(username);
 
-        logger.info(String.format("The user with id %d was removed!", removedUser.getId()));
+        logger.debug(String.format("The user with id %d was removed!", removedUser.getId()));
         return modelMapper.map(removedUser, UserDto.class);
     }
 
-    @PutMapping("/byID/{id}")
-    public UserDto updateUserById(@PathVariable("id") Long id, @Valid @RequestBody UpdateUserDto updateUserDto) {
-        User currentVersion = userService.getUserById(id);
-        User newVersion = modelMapper.map(updateUserDto, User.class);
-        currentVersion.update(newVersion);
+    @PutMapping("/{username}")
+    public UserDto updateUserByUsername(@PathVariable("username") String username, @Valid @RequestBody CreateUpdateUserDto updateUserDto) {
+        User user = modelMapper.map(updateUserDto, User.class);
+        User updatedUser = userService.updateUserByUsername(user, username);
 
-        User updatedUser = userService.updateUserByID(currentVersion, id);
-        logger.info(String.format("The user with id %d was updated!", id));
-        return modelMapper.map(updatedUser, UserDto.class);
-    }
-
-    @PutMapping("/byUsername/{username}")
-    public UserDto updateUserById(@PathVariable("username") String username, @Valid @RequestBody UpdateUserDto updateUserDto) {
-        User currentVersion = userService.getUserByUsername(username);
-        User newVersion = modelMapper.map(updateUserDto, User.class);
-        currentVersion.update(newVersion);
-
-        User updatedUser = userService.updateUserByUsername(currentVersion, username);
-        logger.info(String.format("The user with id %d was updated!", updatedUser.getId()));
+        logger.debug(String.format("The user with id %d was updated!", updatedUser.getId()));
         return modelMapper.map(updatedUser, UserDto.class);
     }
 }

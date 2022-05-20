@@ -22,27 +22,7 @@ public class UserService {
     }
 
     public User addUser(User user) {
-        boolean existsEmail = userRepository
-                .findByEmail(user.getEmail())
-                .isPresent(),
-        existsUsername = userRepository
-                .findByUsername(user.getUsername())
-                .isPresent();
-
-        if (existsEmail) {
-            throw new IllegalStateException("Email already registered!");
-        }
-        if (existsUsername) {
-            throw new IllegalStateException("Username already registered!");
-        }
-
         return userRepository.save(user);
-    }
-
-    public User getUserById(Long id) {
-        return userRepository.findById(id)
-                .orElseThrow(() ->
-                        new EntityNotFoundException(String.format("User with id: %d, does not exist", id)));
     }
 
     public User getUserByUsername(String username) {
@@ -51,22 +31,10 @@ public class UserService {
                         new EntityNotFoundException(String.format("User with username: %s, does not exist", username)));
     }
 
-    public User deleteUserById(Long id) {
-        User userToDelete = getUserById(id);
-        userRepository.delete(userToDelete);
-        return userToDelete;
-    }
-
     public User deleteUserByUsername(String username) {
         User userToDelete = getUserByUsername(username);
         userRepository.delete(userToDelete);
         return userToDelete;
-    }
-
-    public User updateUserByID(User user, Long id) {
-        return userRepository.findById(id)
-                .map(dbUser -> updateUser(dbUser, user))
-                .orElseGet(() -> userRepository.save(user));
     }
 
     public User updateUserByUsername(User user, String username) {

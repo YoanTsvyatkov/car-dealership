@@ -9,12 +9,13 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateUserDto {
+public class CreateUpdateUserDto {
     @NotBlank(message = "The name is mandatory!")
     private String name;
 
@@ -29,6 +30,7 @@ public class CreateUserDto {
     private String email;
 
     @NotNull(message = "The birth date is mandatory!")
+    @Past(message = "The date should be in the past!")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate birthday;
 

@@ -9,6 +9,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter
 @ToString
 public class User {
     @Id
@@ -36,48 +37,6 @@ public class User {
 
     @Column(name = "phone_number", nullable = false)
     private String phoneNumber;
-
-    public void setName(String name) {
-        if (name != null) {
-            this.name = name;
-        }
-    }
-
-    public void setUsername(String username) {
-        if (username != null) {
-            this.username = username;
-        }
-    }
-
-    public void setPassword(String password) {
-        if (password != null) {
-            this.password = password;
-        }
-    }
-
-    public void setEmail(String email) {
-        if (email != null) {
-            this.email = email;
-        }
-    }
-
-    public void setBirthday(LocalDate birthday) {
-        if (birthday != null) {
-            this.birthday = birthday;
-        }
-    }
-
-    public void setRole(UserRole role) {
-        if (role != null) {
-            this.role = role;
-        }
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        if (phoneNumber != null) {
-            this.phoneNumber = phoneNumber;
-        }
-    }
 
     public void update(User other) {
         if (other != null) {
