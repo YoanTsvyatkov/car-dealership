@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 
 @Entity
 @AllArgsConstructor
@@ -28,7 +27,7 @@ public class Car {
     private String photo;
 
     @Column
-    private BigDecimal price;
+    private double price;
 
     @Column
     private String fuelType;

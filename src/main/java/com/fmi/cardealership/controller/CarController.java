@@ -30,7 +30,6 @@ public class CarController {
     private final FileStorageService fileStorageService;
     private static final Logger logger = LoggerFactory.getLogger(CarController.class);
 
-
     public CarController(CarService carService, ModelMapper modelMapper, FileStorageService fileStorageService) {
         this.carService = carService;
         this.modelMapper = modelMapper;
@@ -49,7 +48,7 @@ public class CarController {
             @RequestParam("file") MultipartFile file,
             @RequestParam("year") int year,
             @RequestParam("name") String name,
-            @RequestParam("price") BigDecimal price,
+            @RequestParam("price") double price,
             @RequestParam("fuelType") String fuelType,
             @RequestParam("transmission") String transmission,
             @RequestParam("millage") int millage,
