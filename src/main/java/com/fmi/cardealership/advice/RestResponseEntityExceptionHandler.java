@@ -26,7 +26,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     }
 
     @ExceptionHandler(value
-            = { FileStorageException.class})
+            = {FileStorageException.class, IllegalStateException.class})
     protected ResponseEntity<Object> handleStorageError(
             RuntimeException ex, WebRequest request) {
         String message = ex.getMessage();

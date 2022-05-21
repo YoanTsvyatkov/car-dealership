@@ -1,13 +1,17 @@
 package com.fmi.cardealership.controller;
 
+import com.fmi.cardealership.dto.CreatePaymentDto;
 import com.fmi.cardealership.dto.PaymentDto;
+import com.fmi.cardealership.model.Car;
 import com.fmi.cardealership.model.Payment;
+import com.fmi.cardealership.model.User;
+import com.fmi.cardealership.service.CarService;
 import com.fmi.cardealership.service.PaymentService;
+import com.fmi.cardealership.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -20,12 +24,15 @@ public class PaymentController {
     private final ModelMapper modelMapper;
     private static final Logger logger = LoggerFactory.getLogger(PaymentController.class);
     private final PaymentService paymentService;
-
+    private final CarService carService;
+    private final UserService userService;
 
     @Autowired
-    public PaymentController(PaymentService paymentService, ModelMapper modelMapper) {
+    public PaymentController(PaymentService paymentService, ModelMapper modelMapper, CarService carService, UserService userService) {
         this.paymentService = paymentService;
         this.modelMapper = modelMapper;
+        this.carService = carService;
+        this.userService = userService;
     }
 
     @GetMapping
@@ -42,10 +49,12 @@ public class PaymentController {
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public PaymentDto createPayment(@RequestBody @Valid PaymentDto paymentDto) {
+    public PaymentDto createPayment(@RequestBody @Valid CreatePaymentDto paymentDto) {
         Payment payment = modelMapper.map(paymentDto, Payment.class);
-        logger.info(String.format("User with id %d was created", paymentDto.getId()));
+        Car car = carService.getCarById(paymentDto.getCarId());
+        User user = userService.getUserById(paymentDto.getUserId());
+        payment.setCar(car);
+        payment.setUser(user);
         return modelMapper.map(paymentService.storePayment(payment), PaymentDto.class);
     }
 
@@ -55,7 +64,7 @@ public class PaymentController {
         logger.info(String.format("User with id %d was deleted", id));
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     public void updatePayment(@PathVariable Long id, @RequestBody @Valid PaymentDto paymentDto) {
         Payment payment = modelMapper.map(paymentDto, Payment.class);
         paymentService.updatePayment(id, payment);
