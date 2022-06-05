@@ -45,17 +45,16 @@ public class CarController {
 
     @PostMapping
     public CarDto addCar(
-            @RequestParam("file") MultipartFile file,
-            @RequestParam("year") int year,
-            @RequestParam("name") String name,
-            @RequestParam("price") double price,
-            @RequestParam("fuelType") String fuelType,
-            @RequestParam("transmission") String transmission,
-            @RequestParam("millage") int millage,
-            @RequestParam("exteriorColor") String exteriorColor,
-            @RequestParam("interiorColor") String interiorColor,
-            @RequestParam("mpg") int mpg,
-            @RequestParam("isSold") boolean isSold
+            @RequestParam MultipartFile file,
+            @RequestParam int year,
+            @RequestParam String name,
+            @RequestParam double price,
+            @RequestParam String fuelType,
+            @RequestParam String transmission,
+            @RequestParam int millage,
+            @RequestParam String exteriorColor,
+            @RequestParam String interiorColor,
+            @RequestParam int mpg
     ) {
         String photo = fileStorageService.storeFile(file);
         Car car = new Car();
@@ -68,7 +67,6 @@ public class CarController {
         car.setExteriorColor(exteriorColor);
         car.setInteriorColor(interiorColor);
         car.setMpg(mpg);
-        car.setSold(isSold);
         car.setPhoto(photo);
 
         Car addedCar = carService.addCar(car);
