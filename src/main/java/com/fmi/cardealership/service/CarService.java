@@ -48,7 +48,7 @@ public class CarService {
         dbCar.setFuelType(request.getFuelType());
         dbCar.setYear(request.getYear());
         dbCar.setName(request.getName());
-        dbCar.setPhoto(request.getPhoto());
+        dbCar.setPhotoUrl(request.getPhotoUrl());
         dbCar.setPrice(request.getPrice());
         dbCar.setTransmission(request.getTransmission());
         dbCar.setMillage(request.getMillage());
@@ -59,4 +59,8 @@ public class CarService {
         return carRepository.save(dbCar);
     }
 
+    public Car addCarPhotoUrl(Car addedCar, String carPhotoUrl) {
+        addedCar.setPhotoUrl(carPhotoUrl);
+        return carRepository.save(addedCar);
+    }
 }

@@ -21,4 +21,5 @@ public class CarDto {
     private String interiorColor;
     private int mpg;
     private boolean isSold;
+    private String photoUrl;
 }
