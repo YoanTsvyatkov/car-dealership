@@ -1,0 +1,14 @@
+.container{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.navLink {
+    font-size: 18px;
+}
+
+.navBrand {
+    font-size: 24px;
+}
