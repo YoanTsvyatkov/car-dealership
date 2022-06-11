@@ -1,6 +1,7 @@
 package com.fmi.cardealership.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
@@ -8,6 +9,7 @@ import javax.persistence.*;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Getter
 public class Car {
     @Id
@@ -58,8 +60,8 @@ public class Car {
         this.photoName = photoName;
     }
 
-    public void setYear(int year) {
-        if (year <= 0) {
+    public void setYear(Integer year) {
+        if (year == null || year <= 0) {
             return;
         }
 
@@ -82,8 +84,8 @@ public class Car {
         this.photoUrl = photoUrl;
     }
 
-    public void setPrice(double price) {
-        if (price <= 0) {
+    public void setPrice(Double price) {
+        if (price == null || price <= 0) {
             return;
         }
 
@@ -104,8 +106,8 @@ public class Car {
         this.transmission = transmission;
     }
 
-    public void setMillage(int millage) {
-        if (millage <= 0) {
+    public void setMillage(Integer millage) {
+        if (millage == null || millage <= 0) {
             return;
         }
         this.millage = millage;
@@ -125,8 +127,8 @@ public class Car {
         this.interiorColor = interiorColor;
     }
 
-    public void setMpg(int mpg) {
-        if (mpg <= 0) {
+    public void setMpg(Integer mpg) {
+        if (mpg == null || mpg <= 0) {
             return;
         }
 

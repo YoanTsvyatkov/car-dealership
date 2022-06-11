@@ -56,6 +56,7 @@ public class CarService {
         dbCar.setInteriorColor(request.getInteriorColor());
         dbCar.setMpg(request.getMpg());
         dbCar.setSold(request.isSold());
+        dbCar.setPhotoName(request.getPhotoName());
         return carRepository.save(dbCar);
     }
 

@@ -22,4 +22,5 @@ public class CarDto {
     private int mpg;
     private boolean isSold;
     private String photoUrl;
+    private String photoName;
 }
