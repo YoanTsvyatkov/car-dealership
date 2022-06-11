@@ -34,6 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers(GET, "/api/cars").permitAll()
+                .antMatchers(GET, "/api/cars/**").permitAll()
                 .antMatchers(PUT, "/api/cars/**").hasAnyRole(UserRole.DEALER.toString(), UserRole.ADMIN.toString())
                 .antMatchers(POST, "/api/cars").hasAnyRole(UserRole.DEALER.toString(), UserRole.ADMIN.toString())
                 .antMatchers(DELETE, "/api/cars/**").hasAnyRole(UserRole.DEALER.toString(), UserRole.ADMIN.toString())

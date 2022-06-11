@@ -95,9 +95,41 @@ public class CarController {
     }
 
     @PutMapping("/{id}")
-    public CarDto updateCar(@PathVariable("id") Long id, @RequestBody UpdateCarDto carDto) {
-        Car car = modelMapper.map(carDto, Car.class);
-        return modelMapper.map(carService.updateCar(car, id), CarDto.class);
+    public CarDto updateCar(@PathVariable("id") Long id,
+                            @RequestParam(required = false) MultipartFile file,
+                            @RequestParam(required = false) Integer year,
+                            @RequestParam(required = false) String name,
+                            @RequestParam(required = false) Double price,
+                            @RequestParam(required = false) String fuelType,
+                            @RequestParam(required = false) String transmission,
+                            @RequestParam(required = false) Integer millage,
+                            @RequestParam(required = false) String exteriorColor,
+                            @RequestParam(required = false) String interiorColor,
+                            @RequestParam(required = false) Integer mpg) {
+        String fileName = null;
+        if (file != null) {
+            fileName = fileStorageService.storeFile(file);
+        }
+        Car car = new Car();
+        car.setYear(year);
+        car.setName(name);
+        car.setPrice(price);
+        car.setFuelType(fuelType);
+        car.setTransmission(transmission);
+        car.setMillage(millage);
+        car.setExteriorColor(exteriorColor);
+        car.setInteriorColor(interiorColor);
+        car.setMpg(mpg);
+        car.setPhotoName(fileName);
+        Car updatedCar = carService.updateCar(car, id);
+
+        if (file != null) {
+            String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                    .path(String.format("api/cars/%d/photo", updatedCar.getId()))
+                    .toUriString();
+            updatedCar = carService.addCarPhotoUrl(updatedCar, fileDownloadUri);
+        }
+        return modelMapper.map(updatedCar, CarDto.class);
     }
 
     private String getContentType(Resource resource, HttpServletRequest request) {
