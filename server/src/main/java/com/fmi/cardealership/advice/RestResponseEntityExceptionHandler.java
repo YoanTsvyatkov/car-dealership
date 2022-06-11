@@ -44,12 +44,4 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 .body(new ErrorDto(ex.getMessage()));
     }
-
-    @ExceptionHandler(value
-            = {WrongParametersException.class})
-    protected ResponseEntity<Object> handleWrongParametersException(
-            RuntimeException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(new ErrorDto(ex.getMessage()));
-    }
 }
