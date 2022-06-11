@@ -8,6 +8,8 @@ import org.modelmapper.PropertyMap;
 import org.modelmapper.TypeMap;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 public class AppConfig {
@@ -25,5 +27,10 @@ public class AppConfig {
         typeMap.addMappings(mapper -> mapper.map(src -> src.getCar().getId(), PaymentDto::setCarId));
         typeMap.addMappings(mapper -> mapper.map(src -> src.getUser().getId(), PaymentDto::setUserId));
         return modelMapper;
+    }
+
+    @Bean
+    public PasswordEncoder encoder() {
+        return new BCryptPasswordEncoder();
     }
 }

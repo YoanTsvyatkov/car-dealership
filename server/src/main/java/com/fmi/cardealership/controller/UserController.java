@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -48,7 +49,11 @@ public class UserController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public UserDto registerUser(@Valid @RequestBody CreateUpdateUserDto createUserDto) {
+    public UserDto registerUser(@Valid @RequestBody CreateUpdateUserDto createUserDto, Errors errors) {
+        if (errors.hasErrors()) {
+            throw new IllegalArgumentException("Invalid user data");
+        }
+
         User user = modelMapper.map(createUserDto, User.class);
         User addedUser = userService.addUser(user);
 
