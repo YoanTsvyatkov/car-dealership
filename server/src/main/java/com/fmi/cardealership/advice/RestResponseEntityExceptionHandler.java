@@ -45,11 +45,11 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
                 .body(new ErrorDto(ex.getMessage()));
     }
 
-//    @ExceptionHandler(value
-//            = {WrongParametersException.class})
-//    protected ResponseEntity<Object> handleWrongParametersException(
-//            RuntimeException ex) {
-//        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-//                .body(new ErrorDto(ex.getMessage()));
-//    }
+    @ExceptionHandler(value
+            = {WrongParametersException.class})
+    protected ResponseEntity<Object> handleWrongParametersException(
+            RuntimeException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ErrorDto(ex.getMessage()));
+    }
 }
