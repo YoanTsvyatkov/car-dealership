@@ -14,7 +14,8 @@ export default function Cars() {
     const fetchCars = async () => {
       const response = await fetch("http://localhost:8080/api/cars");
       const data = await response.json();
-      setCars(data);
+      const availableCars = data.filter(car => car.sold === false)
+      setCars(availableCars);
     };
 
     fetchCars();
