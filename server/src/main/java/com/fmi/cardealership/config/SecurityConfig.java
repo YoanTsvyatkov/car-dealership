@@ -42,6 +42,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .antMatchers(PUT, "/api/payments/**").hasAnyRole(UserRole.DEALER.toString(), UserRole.ADMIN.toString())
                 .antMatchers(DELETE, "/api/payments/**").hasAnyRole(UserRole.DEALER.toString(), UserRole.ADMIN.toString())
                 .antMatchers(DELETE, "/api/cars/**").hasAnyRole(UserRole.DEALER.toString(), UserRole.ADMIN.toString())
+                .antMatchers(POST, "/api/users").hasAnyRole(UserRole.ADMIN.toString())
+                .antMatchers(GET, "/api/users").hasAnyRole(UserRole.ADMIN.toString())
+                .antMatchers(PUT, "/api/users/**").hasAnyRole(UserRole.ADMIN.toString())
+                .antMatchers(DELETE, "/api/users/**").hasAnyRole(UserRole.ADMIN.toString())
                 .antMatchers("/**").permitAll()
                 .and().exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint);
 
