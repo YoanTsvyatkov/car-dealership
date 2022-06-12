@@ -47,6 +47,17 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private Status status = Status.ACTIVE;
 
+    public User(String name, String username, String password, String email, LocalDate birthday, UserRole role, String phoneNumber, Status status) {
+        this.name = name;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.birthday = birthday;
+        this.role = role;
+        this.phoneNumber = phoneNumber;
+        this.status = status;
+    }
+
     public void update(User other) {
         if (other != null) {
             this.setName(other.getName());

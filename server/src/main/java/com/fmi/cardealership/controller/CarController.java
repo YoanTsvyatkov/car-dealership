@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.websocket.server.PathParam;
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -43,6 +44,11 @@ public class CarController {
                 .collect(Collectors.toList());
     }
 
+    @GetMapping("{id}")
+    public CarDto getCarById(@PathVariable("id") Long id) {
+        return modelMapper.map(carService.getCarById(id), CarDto.class);
+    }
+
     @PostMapping
     public CarDto addCar(
             @RequestParam MultipartFile file,
@@ -54,7 +60,8 @@ public class CarController {
             @RequestParam int millage,
             @RequestParam String exteriorColor,
             @RequestParam String interiorColor,
-            @RequestParam int mpg
+            @RequestParam int mpg,
+            @RequestParam String carDescription
     ) {
         String fileName = fileStorageService.storeFile(file);
         Car car = new Car();
@@ -68,6 +75,7 @@ public class CarController {
         car.setInteriorColor(interiorColor);
         car.setMpg(mpg);
         car.setPhotoName(fileName);
+        car.setCarDescription(carDescription);
         Car addedCar = carService.addCar(car);
 
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
@@ -105,7 +113,8 @@ public class CarController {
                             @RequestParam(required = false) Integer millage,
                             @RequestParam(required = false) String exteriorColor,
                             @RequestParam(required = false) String interiorColor,
-                            @RequestParam(required = false) Integer mpg) {
+                            @RequestParam(required = false) Integer mpg,
+                            @RequestParam(required = false) String carDescription) {
         String fileName = null;
         if (file != null) {
             fileName = fileStorageService.storeFile(file);
@@ -121,6 +130,7 @@ public class CarController {
         car.setInteriorColor(interiorColor);
         car.setMpg(mpg);
         car.setPhotoName(fileName);
+        car.setCarDescription(carDescription);
         Car updatedCar = carService.updateCar(car, id);
 
         if (file != null) {
