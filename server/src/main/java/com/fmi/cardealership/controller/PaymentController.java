@@ -12,6 +12,7 @@ import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -49,12 +50,14 @@ public class PaymentController {
     }
 
     @PostMapping
-    public PaymentDto createPayment(@RequestBody @Valid CreatePaymentDto paymentDto) {
+    public PaymentDto createPayment(@RequestBody @Valid CreatePaymentDto paymentDto, Authentication authentication) {
+        String username = authentication.getName();
         Payment payment = modelMapper.map(paymentDto, Payment.class);
         Car car = carService.getCarById(paymentDto.getCarId());
-        User user = userService.getUserById(paymentDto.getUserId());
+        User user = userService.getUserByUsername(username);
         payment.setCar(car);
         payment.setUser(user);
+
         return modelMapper.map(paymentService.storePayment(payment), PaymentDto.class);
     }
 

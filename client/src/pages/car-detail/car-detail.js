@@ -1,13 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { Container, Image, Row, Col, ListGroup, Button, Modal} from "react-bootstrap";
+import {
+  Container,
+  Image,
+  Row,
+  Col,
+  ListGroup,
+  Button,
+  Modal,
+} from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import styles from "./car-detail.module.css";
 import ListItem from "../../components/list-item/list-item";
+import { useUserContext } from "../../context/user-context";
 
 export default function CarDetails() {
   const [car, setCar] = useState({});
   const [showModal, setShowModal] = useState(false);
   const params = useParams();
+  const { token } = useUserContext();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -24,30 +34,48 @@ export default function CarDetails() {
   }, [params.carId]);
 
   const onOpenDialogClick = () => setShowModal(true);
-  const handleClose = () => setShowModal(false)
+  const handleClose = () => setShowModal(false);
   const handleBuy = async () => {
-    //TODO make api call
+    const body = {
+      amount: car.price,
+      carId: car.id,
+    };
+    const response = await fetch("http://localhost:8080/api/payments", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(body),
+    });
+    await response.json();
+
+    handleClose();
+
+    if (!response.ok) {
+      alert("Something went wrong");
+      return;
+    }
     navigate("/cars");
-  }
-  const test = () => {
-    navigate("/cars");
-  }
+  };
 
   return (
     <Container className={styles.container}>
-        <Modal show={showModal} onHide={handleClose}>
-            <Modal.Header closeButton>
-            <Modal.Title>Are you sure you want to buy {car.name}?</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>{car.name} will cost you: {car.price}</Modal.Body>
-            <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
-                Close
-            </Button>
-            <Button variant="primary" onClick={handleBuy}>
-                Confirm buy
-            </Button>
-            </Modal.Footer>
+      <Modal show={showModal} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Are you sure you want to buy {car.name}?</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {car.name} will cost you: {car.price}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleBuy}>
+            Confirm buy
+          </Button>
+        </Modal.Footer>
       </Modal>
 
       <Row className={styles.mainRow}>
