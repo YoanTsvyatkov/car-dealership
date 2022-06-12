@@ -1,5 +1,6 @@
 package com.fmi.cardealership.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fmi.cardealership.model.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -32,6 +33,7 @@ public class CreateUpdateUserDto {
     @NotNull(message = "The birth date is mandatory!")
     @Past(message = "The date should be in the past!")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @JsonFormat(pattern="yyyy-MM-dd")
     private LocalDate birthday;
 
     @NotNull(message = "The user role is mandatory!")

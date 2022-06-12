@@ -25,7 +25,6 @@ public class AppConfig {
 
         TypeMap<Payment, PaymentDto> typeMap = modelMapper.createTypeMap(Payment.class, PaymentDto.class);
         typeMap.addMappings(mapper -> mapper.map(src -> src.getCar().getId(), PaymentDto::setCarId));
-        typeMap.addMappings(mapper -> mapper.map(src -> src.getUser().getId(), PaymentDto::setUserId));
         return modelMapper;
     }
 
