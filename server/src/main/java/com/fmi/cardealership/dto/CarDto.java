@@ -23,4 +23,5 @@ public class CarDto {
     private boolean isSold;
     private String photoUrl;
     private String photoName;
+    private String carDescription;
 }

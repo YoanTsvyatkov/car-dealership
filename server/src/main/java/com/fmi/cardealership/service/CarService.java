@@ -57,6 +57,7 @@ public class CarService {
         dbCar.setMpg(request.getMpg());
         dbCar.setSold(request.isSold());
         dbCar.setPhotoName(request.getPhotoName());
+        dbCar.setCarDescription(request.getCarDescription());
         return carRepository.save(dbCar);
     }
 

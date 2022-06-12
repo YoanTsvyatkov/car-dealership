@@ -52,6 +52,27 @@ public class Car {
     @Column
     private String photoName;
 
+    @Column(length = 2000)
+    private String carDescription;
+
+    public Car(int year, String name, String photoUrl, double price, String fuelType, String transmission,
+               int millage, String exteriorColor, String interiorColor, int mpg, boolean isSold, String photoName,
+               String carDescription) {
+        this.year = year;
+        this.name = name;
+        this.photoUrl = photoUrl;
+        this.price = price;
+        this.fuelType = fuelType;
+        this.transmission = transmission;
+        this.millage = millage;
+        this.exteriorColor = exteriorColor;
+        this.interiorColor = interiorColor;
+        this.mpg = mpg;
+        this.isSold = isSold;
+        this.photoName = photoName;
+        this.carDescription = carDescription;
+    }
+
     public void setPhotoName(String photoName) {
         if (photoName == null || photoName.isBlank()) {
             return;
@@ -133,6 +154,14 @@ public class Car {
         }
 
         this.mpg = mpg;
+    }
+
+    public void setCarDescription(String carDescription) {
+        if (carDescription == null || carDescription.isBlank()) {
+            return;
+        }
+
+        this.carDescription = carDescription;
     }
 
     public void setSold(boolean sold) {
