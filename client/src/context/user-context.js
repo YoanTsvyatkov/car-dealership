@@ -3,7 +3,7 @@ import { useLocalStorage } from '../custom-hooks/use-storage';
 
 const UserContext = React.createContext()
 
-const DUMMY_TOKEN = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJnb3NobyIsImV4cCI6MTY1NTA3MTU2NSwiaWF0IjoxNjU1MDYwNzY1fQ.0KQxcHCa6zBqL5f00bZepyLSqtmGggoAwUV6T1vn5kXRvqmjSxnFKoR9hvEXDS3LgJyZr7o-9JpsC90i8YNPfw'
+const DUMMY_TOKEN = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJpdmFuMSIsImV4cCI6MTY1NTU3Mzk1MiwiaWF0IjoxNjU1NTYzMTUyfQ.1_PdXTRCEtIrO3u91QSgXVKVBkLYVA6E955nXarQpckqPW8lSUNTnpmew8yuau0ZvoCAyTiVfwo4eKQa5mVe8w"
 
 export function useUserContext() {
   return useContext(UserContext)

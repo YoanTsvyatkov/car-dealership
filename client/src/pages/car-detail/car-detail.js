@@ -27,7 +27,6 @@ export default function CarDetails() {
       );
       const data = await response.json();
       setCar(data);
-      console.log(data.photoUrl);
     };
 
     getCar();
@@ -100,16 +99,22 @@ export default function CarDetails() {
       <Row className="mt-3">
         <h2>Additional details</h2>
         <div className={styles.additionalDetails}>
-          <ListGroup as="ul" className={styles.listGroup}>
+          <Row>
+            <Col>
+            <ListGroup as="ul" className={styles.listGroup}>
             <ListItem title="Fuel type" text={car.fuelType} />
             <ListItem title="Transmission" text={car.transmission} />
             <ListItem title="Milleage" text={car.millage} />
           </ListGroup>
-          <ListGroup as="ul" className={styles.listGroup}>
+            </Col>
+            <Col>
+            <ListGroup as="ul" className={styles.listGroup}>
             <ListItem title="Exterior color" text={car.exteriorColor} />
             <ListItem title="Interior color" text={car.interiorColor} />
             <ListItem title="Mpg" text={car.mpg} />
           </ListGroup>
+            </Col>
+          </Row>
         </div>
       </Row>
     </Container>

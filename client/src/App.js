@@ -4,10 +4,10 @@ import Layout from "./components/layout/layout";
 import CarModify from "./pages/car-modify/car-modify";
 import Login from "./pages/login/login";
 import Register from "./pages/register/register";
-import Cars from "./pages/cars/cars";
 import Report from "./pages/report/report";
 import CarDetails from "./pages/car-detail/car-detail";
 import { UserProvider } from "./context/user-context";
+import CarsPage from "./pages/cars/cars";
 
 export default function App() {
   return (
@@ -15,8 +15,8 @@ export default function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
-            <Route index element={<Cars />} />
-            <Route path="cars" element={<Cars />} />
+            <Route index element={<CarsPage />} />
+            <Route path="cars" element={<CarsPage />} />
             <Route path="cars/:carId" element={<CarDetails />} />
             <Route path="car-modify" element={<CarModify />} />
             <Route path="report" element={<Report />} />

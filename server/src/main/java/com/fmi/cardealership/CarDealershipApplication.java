@@ -31,7 +31,8 @@ public class CarDealershipApplication implements CommandLineRunner {
 
 	private static List<User> users = List.of(
 			new User("Ivan", "ivan1", "1234",
-					"ivan@gmail.com", LocalDate.of(1999, 1, 1), UserRole.DEALER,
+					"ivan@gmail.com", LocalDate.of(1999, 1, 1),
+					UserRole.ADMIN,
 					"0988773312", Status.ACTIVE ),
 			new User("Pe6o", "pesho1", "1234",
 					"pesho@gmail.com", LocalDate.of(2001, 1, 1), UserRole.USER,
@@ -65,7 +66,7 @@ public class CarDealershipApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		users.forEach(userService::addUser);
-		cars.forEach(carService::addCar);
+		if (userService.getAllUsers().isEmpty()) users.forEach(userService::addUser);
+		if (carService.getAllCars().isEmpty()) cars.forEach(carService::addCar);
 	}
 }
