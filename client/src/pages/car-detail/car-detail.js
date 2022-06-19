@@ -19,6 +19,7 @@ export default function CarDetails() {
   const params = useParams();
   const { token } = useUserContext();
   const navigate = useNavigate();
+  const { remove, removeUserRole } = useUserContext();
 
   useEffect(() => {
     const getCar = async () => {
@@ -47,6 +48,12 @@ export default function CarDetails() {
       },
       body: JSON.stringify(body),
     });
+
+    if (response.status === 401) {
+      remove();
+      removeUserRole();
+    }
+
     await response.json();
 
     handleClose();
@@ -87,13 +94,15 @@ export default function CarDetails() {
           <h2 className="mt-4">€ {car.price}</h2>
 
           <div>{car.carDescription}</div>
-          <Button
-            variant="success"
-            className={styles.buy}
-            onClick={onOpenDialogClick}
-          >
-            Buy
-          </Button>
+          {token && (
+            <Button
+              variant="success"
+              className={styles.buy}
+              onClick={onOpenDialogClick}
+            >
+              Buy
+            </Button>
+          )}
         </Col>
       </Row>
       <Row className="mt-3">
@@ -101,18 +110,18 @@ export default function CarDetails() {
         <div className={styles.additionalDetails}>
           <Row>
             <Col>
-            <ListGroup as="ul" className={styles.listGroup}>
-            <ListItem title="Fuel type" text={car.fuelType} />
-            <ListItem title="Transmission" text={car.transmission} />
-            <ListItem title="Milleage" text={car.millage} />
-          </ListGroup>
+              <ListGroup as="ul" className={styles.listGroup}>
+                <ListItem title="Fuel type" text={car.fuelType} />
+                <ListItem title="Transmission" text={car.transmission} />
+                <ListItem title="Milleage" text={car.millage} />
+              </ListGroup>
             </Col>
             <Col>
-            <ListGroup as="ul" className={styles.listGroup}>
-            <ListItem title="Exterior color" text={car.exteriorColor} />
-            <ListItem title="Interior color" text={car.interiorColor} />
-            <ListItem title="Mpg" text={car.mpg} />
-          </ListGroup>
+              <ListGroup as="ul" className={styles.listGroup}>
+                <ListItem title="Exterior color" text={car.exteriorColor} />
+                <ListItem title="Interior color" text={car.interiorColor} />
+                <ListItem title="Mpg" text={car.mpg} />
+              </ListGroup>
             </Col>
           </Row>
         </div>

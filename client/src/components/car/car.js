@@ -12,6 +12,7 @@ export default function Car({
   onCarUpdate,
 }) {
   const { token } = useUserContext();
+  const { remove, removeUserRole } = useUserContext();
 
   const onDeleteCarClicked = async () => {
     console.log(`token: ${token}`);
@@ -21,6 +22,12 @@ export default function Car({
         Authorization: `Bearer ${token}`,
       },
     });
+    if (response.status === 401) {
+      remove()
+      removeUserRole()
+      return;
+    }
+
     await response.json();
 
     if (!response.ok) {

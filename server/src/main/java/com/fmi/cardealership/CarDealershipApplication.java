@@ -14,7 +14,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootApplication
