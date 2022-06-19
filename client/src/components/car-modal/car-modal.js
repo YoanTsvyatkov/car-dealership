@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import { Modal, Form, Button, Row, Col } from "react-bootstrap";
 import { useUserContext } from "../../context/user-context";
 import useForm from "../../custom-hooks/use-form";
@@ -6,7 +6,7 @@ import validate from "../../utils/car-form-validation";
 
 export default function CarModal({ title, onSubmit, formMethod = 'POST', car = {}}) {
   const [file, setFile] = useState(undefined);
-  const {token} = useUserContext();
+  const {token, remove, removeUserRole } = useUserContext();
   const [fileInputValid, setFileInputValid] = useState(true)
   
   const onFormSubmit = async () => {
@@ -32,6 +32,10 @@ export default function CarModal({ title, onSubmit, formMethod = 'POST', car = {
         },
         body: formData
       });
+      if (response.status === 401) {
+        remove()
+        removeUserRole()
+      } 
       const data = await response.json();
       onSubmit(data)
     } catch(err) {
