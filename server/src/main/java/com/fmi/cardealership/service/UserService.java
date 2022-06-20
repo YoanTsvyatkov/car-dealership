@@ -26,7 +26,10 @@ public class UserService {
     public User addUser(User user) {
         String hashedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(hashedPassword);
-
+        if (userRepository.findByUsername(user.getUsername()).isPresent() ||
+                userRepository.findByEmail(user.getEmail()).isPresent()) {
+            throw new IllegalStateException("Invalid user data");
+        }
         return userRepository.save(user);
     }
 
