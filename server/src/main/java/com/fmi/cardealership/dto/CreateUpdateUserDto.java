@@ -36,9 +36,6 @@ public class CreateUpdateUserDto {
     @JsonFormat(pattern="yyyy-MM-dd")
     private LocalDate birthday;
 
-    @NotNull(message = "The user role is mandatory!")
-    private UserRole role;
-
     @NotBlank(message = "The phone number is mandatory!")
     private String phoneNumber;
 }
