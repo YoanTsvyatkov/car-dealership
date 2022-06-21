@@ -4,15 +4,12 @@ import { useLocalStorage } from "../custom-hooks/use-storage";
 
 const UserContext = React.createContext();
 
-const DUMMY_TOKEN = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwZXNobzEiLCJleHAiOjE2NTU2NTk2ODYsImlhdCI6MTY1NTY0ODg4Nn0.kOk6ahByfkMKnRqMte2_Je4T_iHwOTQR_-fuwQ9ahjbg_yIkbl-AIJnFzV4tRS1gveTmkHPkCBCgC4xeb04AkA";
-
 export function useUserContext() {
   return useContext(UserContext);
 }
 
 export function UserProvider({ children }) {
-  //TODO remove dummy token
-  const [token, setToken, remove] = useLocalStorage("AUTH_TOKEN", DUMMY_TOKEN);
+  const [token, setToken, remove] = useLocalStorage("AUTH_TOKEN");
   const [userRole, setUserRole, removeUserRole] = useLocalStorage("USER");
 
   const navigate = useNavigate();
