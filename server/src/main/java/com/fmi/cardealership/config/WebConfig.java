@@ -14,5 +14,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addMapping("/api/cars/**").allowedOrigins("*").allowedMethods("GET", "POST","PUT", "DELETE");
         registry.addMapping("/api/payments/**").allowedOrigins("*").allowedMethods("GET", "POST","PUT", "DELETE");
         registry.addMapping("/api/users/**").allowedOrigins("*").allowedMethods("GET", "POST","PUT", "DELETE");
+        registry.addMapping("/api/login").allowedOrigins("*").allowedMethods("POST");
+        registry.addMapping("/api/register").allowedOrigins("*").allowedMethods("POST");
     }
 }
