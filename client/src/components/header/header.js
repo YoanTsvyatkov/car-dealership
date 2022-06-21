@@ -31,6 +31,11 @@ export default function Header() {
                 <Nav.Link className={styles.navLink}>Modify cars</Nav.Link>
               </LinkContainer>
             )}
+            {isUserAuthorized && (
+              <LinkContainer to="/report">
+                <Nav.Link className={styles.navLink}>Report</Nav.Link>
+              </LinkContainer>
+            )}
             {isUserNotLoggedIn ? (
               <>
                 <LinkContainer to="/register">

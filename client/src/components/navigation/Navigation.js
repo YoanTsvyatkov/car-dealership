@@ -7,6 +7,7 @@ import CarDetails from "../../pages/car-detail/car-detail";
 import Login from "../../pages/login/login";
 import Register from "../../pages/register/register";
 import { useUserContext } from "../../context/user-context";
+import Report from "../../pages/report/report";
 
 export default function Navigation() {
   const { userRole, token } = useUserContext();
@@ -27,11 +28,23 @@ export default function Navigation() {
           }
         />
         <Route
-          path="login"
-          element={isUserAuthenticated ? <Navigate replace to="/cars" /> : <Login />}
+          path="report"
+          element={
+            isUserAuthorized ? <Report /> : <Navigate replace to="/cars" />
+          }
         />
-        <Route path="register"
-          element={isUserAuthenticated ? <Navigate replace to="/cars" /> : <Register />} />
+        <Route
+          path="login"
+          element={
+            isUserAuthenticated ? <Navigate replace to="/cars" /> : <Login />
+          }
+        />
+        <Route
+          path="register"
+          element={
+            isUserAuthenticated ? <Navigate replace to="/cars" /> : <Register />
+          }
+        />
       </Route>
     </Routes>
   );
