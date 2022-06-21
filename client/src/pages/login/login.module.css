@@ -19,3 +19,8 @@
 .button {
     width: 100px;
 }
+
+.alert {
+    width: 40%;
+    margin-top: 1rem;
+}

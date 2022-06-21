@@ -92,10 +92,7 @@ export default function Login() {
             Login
           </Button>
         </div>
-        {alert && <Alert style={{
-          width: "40%",
-          marginTop: "1rem",
-        }} variant="danger">Invalid username or password</Alert>}
+        {alert && <Alert className={styles.alert} variant="danger">Invalid username or password</Alert>}
       </Form>
     </>
   );
