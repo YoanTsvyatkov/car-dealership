@@ -1,0 +1,26 @@
+.container {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.formControl {
+    width: 40%;
+    margin-bottom: 6px;
+}
+
+.buttonContainer {
+    display: flex;
+    justify-content: start;
+    width: 40%;
+}
+
+.button {
+    width: 100px;
+}
+
+.alert {
+    width: 40%;
+    margin-top: 1rem;
+}
