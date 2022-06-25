@@ -1,5 +1,5 @@
-import React from "react";
-import { Form, Button, Row } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Form, Button, Row, Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import useForm from "../../custom-hooks/use-form";
 import validate from "../../utils/register-form-validation";
@@ -7,9 +7,22 @@ import styles from "./register.module.css"
 
 export default function Registration() { 
   const navigate = useNavigate();
+  const [alert, setAlert] = useState(false);
+
+  useEffect(() => {
+    let timeout;
+    if (alert) {
+      timeout = setTimeout(() => {
+        setAlert(false);
+      }, 5000);
+    }
+
+    return () => {
+      clearTimeout(timeout);
+    }
+  }, [alert, setAlert])
 
   const onRegFormSubmit = async () => {
-    values.role = 'USER'
     try {
       const response = await fetch(`http://localhost:8080/api/register`, {
         method: "POST",
@@ -20,10 +33,10 @@ export default function Registration() {
       });
 
       if(response.status !== 200) {
-        //???
+        console.log(values);
+        setAlert(true);
+        return;
       }
-
-      const data = await response.json();
      
     } catch(err) {
       console.log(err)
@@ -80,7 +93,7 @@ export default function Registration() {
           <Row>
               <Form.Group className="mb-3" controlId="formGroupBirthdate">
                 <Form.Label>Date of Birth</Form.Label>
-                <Form.Control type="date" isInvalid={!!errors.date} name="date" onChange={handleChange} value={values.date || undefined}/>
+                <Form.Control type="date" isInvalid={!!errors.date} name="birthday" onChange={handleChange} value={values.birthday || undefined}/>
                 <Form.Control.Feedback type="invalid">
                   {errors.date}
                 </Form.Control.Feedback>
@@ -98,6 +111,7 @@ export default function Registration() {
           <Button variant="primary" type="submit">
             Submit
           </Button>
+          {alert && <Alert className={styles.alert} variant="danger">Invalid registration data</Alert>}
         </Form>
     </>
   );

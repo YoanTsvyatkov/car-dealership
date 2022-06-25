@@ -22,7 +22,7 @@ export default function validate(values) {
         errors.password = "Password must be at least 6 characters"
     }
 
-    if(!values.date) {
+    if(!values.birthday) {
         errors.date = "Date of birth must not be empty"
     }
 
