@@ -23,7 +23,7 @@ export default function validate(values) {
     }
 
     if(!values.birthday) {
-        errors.date = "Date of birth must not be empty"
+        errors.birthday = "Date of birth must not be empty"
     }
 
     if(!values.email) {
